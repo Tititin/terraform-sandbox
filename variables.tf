@@ -7,7 +7,7 @@ variable "stage_name" {
   default     = "dev"
   description = "Current stage name of infra."
   validation {
-    condition     = ["dev", "stg", "prod"]
+    condition     = "dev"
     error_message = "Variable 'stage_name' should be either 'dev', 'stg', 'prod'"
   }
 }
