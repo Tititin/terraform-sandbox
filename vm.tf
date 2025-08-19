@@ -1,6 +1,6 @@
 # Create virtual machine
 resource "azurerm_windows_virtual_machine" "iis" {
-  name                  = "vm-win-iis"
+  name                  = "vm-win-iis-${var.stage_name}"
   admin_username        = "azureuser"
   admin_password        = azurerm_key_vault_secret.iis_password.value
   location              = azurerm_resource_group.rg.location
@@ -9,7 +9,7 @@ resource "azurerm_windows_virtual_machine" "iis" {
   size                  = "Standard_DS1_v2"
 
   os_disk {
-    name                 = "myOsDisk"
+    name                 = "${var.stage_name}myOsDisk"
     caching              = "ReadWrite"
     storage_account_type = "Premium_LRS"
   }
@@ -31,7 +31,7 @@ resource "azurerm_windows_virtual_machine" "iis" {
 
 # Install IIS web server to the virtual machine
 resource "azurerm_virtual_machine_extension" "web_server_install" {
-  name                       = "wsi-terraform-iis"
+  name                       = "wsi-terraform-iis-${var.stage_name}"
   virtual_machine_id         = azurerm_windows_virtual_machine.iis.id
   publisher                  = "Microsoft.Compute"
   type                       = "CustomScriptExtension"
@@ -49,7 +49,7 @@ resource "azurerm_virtual_machine_extension" "web_server_install" {
 
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "nginx" {
-  name                            = "vm-linux-nginx"
+  name                            = "vm-linux-nginx-${var.stage_name}"
   admin_username                  = "azureuser"
   admin_password                  = azurerm_key_vault_secret.iis_password.value
   location                        = azurerm_resource_group.rg.location
@@ -59,7 +59,7 @@ resource "azurerm_linux_virtual_machine" "nginx" {
   disable_password_authentication = false
 
   os_disk {
-    name                 = "myNginxDisk"
+    name                 = "${var.stage_name}myNginxDisk"
     caching              = "ReadWrite"
     storage_account_type = "Premium_LRS"
   }

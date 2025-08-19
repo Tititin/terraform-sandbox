@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "terraform_kv" {
-  name                = "iisnginxterraformkv"
+  name                = "iisnginxterraformkv${var.stage_name}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
