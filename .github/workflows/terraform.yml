@@ -12,6 +12,7 @@ permissions:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    environment: DEV
     defaults:
       run:
         working-directory: .
@@ -22,9 +23,6 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       ARM_USE_OIDC: true
-
-      # stage_name dynamique
-      TF_VAR_stage_name: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
 
       # backend key dynamique pour séparer les states
       BACKEND_KEY: ${{ github.ref == 'refs/heads/main' && 'prod.tfstate' || 'dev.tfstate' }}
@@ -62,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: 
       - terraform
-    environment: production    # ajoute une approbation manuelle GitHub ici
+    environment: DEV
     defaults:
       run:
         working-directory: .
@@ -72,7 +70,7 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       ARM_USE_OIDC: true
-      TF_VAR_stage_name: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
+
       BACKEND_KEY: ${{ github.ref == 'refs/heads/main' && 'prod.tfstate' || 'dev.tfstate' }}
 
     steps:
