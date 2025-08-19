@@ -7,7 +7,7 @@ variable "stage_name" {
   default     = "dev"
   description = "Current stage name of infra."
   validation {
-    condition     = "dev"
+    condition     = contains(["dev", "stg", "prod"], var.stage_name)
     error_message = "Variable 'stage_name' should be either 'dev', 'stg', 'prod'"
   }
 }
