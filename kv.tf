@@ -39,7 +39,7 @@ resource "azurerm_key_vault_secret" "iis_password" {
   name         = "iispwd"
   value        = random_password.password.result
 
-  depends_on = [ random_password.password ]
+  depends_on = [random_password.password]
 }
 
 resource "azurerm_key_vault_secret" "nginx_password" {
@@ -47,7 +47,7 @@ resource "azurerm_key_vault_secret" "nginx_password" {
   name         = "nginxpwd"
   value        = random_password.password.result
 
-  depends_on = [ random_password.password ]
+  depends_on = [random_password.password]
 }
 
 

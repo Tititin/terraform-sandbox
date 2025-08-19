@@ -4,10 +4,10 @@ variable "resource_group_location" {
 }
 
 variable "stage_name" {
-  default = "dev"
+  default     = "dev"
   description = "Current stage name of infra."
   validation {
-    condition = ["dev", "stg", "prod"]
+    condition     = ["dev", "stg", "prod"]
     error_message = "Variable 'stage_name' should be either 'dev', 'stg', 'prod'"
   }
 }
