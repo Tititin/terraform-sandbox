@@ -50,12 +50,12 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -out=${{env.TF_VAR_stage_name}}.tfplan
+        run: terraform plan -out=${{vars.TF_VAR_stage_name}}.tfplan
 
       - name: Upload tfplan artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{env.TF_VAR_stage_name}}.tfplan
+          name: ${{vars.TF_VAR_stage_name}}.tfplan
           path: .
 
   apply:
@@ -87,7 +87,7 @@ jobs:
       - name: Download tfplan
         uses: actions/download-artifact@v4
         with:
-          name: ${{env.TF_VAR_stage_name}}.tfplan
+          name: ${{vars.TF_VAR_stage_name}}.tfplan
           path: .
 
       - name: Terraform Init
@@ -99,4 +99,4 @@ jobs:
             -backend-config="key=${BACKEND_KEY}"
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve ${{env.TF_VAR_stage_name}}.tfplan
+        run: terraform apply -auto-approve ${{vars.TF_VAR_stage_name}}.tfplan
